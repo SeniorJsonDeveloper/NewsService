@@ -34,6 +34,18 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.0")
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     implementation("org.springframework.boot:spring-boot-starter-validation:3.2.1")
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis:3.2.1")
+    implementation("org.springframework.boot:spring-boot-starter-cache:3.2.0")
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    // https://mvnrepository.com/artifact/io.lettuce/lettuce-core
+    implementation("io.lettuce:lettuce-core:6.3.0.RELEASE")
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.14.0'
+
+
+
 
 
 

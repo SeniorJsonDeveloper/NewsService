@@ -9,6 +9,7 @@ import project.newtrying.models.dto.CreateUserWithNewsRequest;
 import project.newtrying.models.dto.UpsertUserRequest;
 import project.newtrying.models.entitites.News;
 import project.newtrying.models.entitites.User;
+import project.newtrying.models.mappers.UserMapper;
 import project.newtrying.models.mappers.impl.UserMapperImpl;
 import project.newtrying.models.dto.responses.UserListResponse;
 import project.newtrying.models.dto.responses.UserResponse;
@@ -20,34 +21,37 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/users")
 public class UserController {
-    @Qualifier("dataBaseUserServiceImpl")
-    private final UserService userService;
-    private final UserMapperImpl userMapper;
-
+    private final UserService dataBaseUserServiceImpl;
+    private final UserMapper userMapper;
 
     @GetMapping
     public ResponseEntity<UserListResponse> getAllUsers(){
-        return ResponseEntity.ok(userMapper.responseList(userService.findAll()));
+        return ResponseEntity.ok(userMapper.responseList(dataBaseUserServiceImpl.findAll()));
     }
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id){
-        return ResponseEntity.ok(userMapper.response(userService.findById(id)));
+        return ResponseEntity.ok(userMapper.response(dataBaseUserServiceImpl.findById(id)));
+    }
+    @GetMapping("/{userName")
+    public ResponseEntity<UserResponse> getUserByName(@PathVariable String name){
+        return ResponseEntity.ok(userMapper.response(dataBaseUserServiceImpl
+                .findByName(name)));
     }
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody UpsertUserRequest request) {
-        var existedUser = userService.createUser(userMapper.requestToUser(request));
+        var existedUser = dataBaseUserServiceImpl.createUser(userMapper.requestToUser(request));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userMapper.response(existedUser));
     }
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id,
                                                    @RequestBody UpsertUserRequest request) {
-        var newUser = userService.updateUser(userMapper.requestToUser(id, request));
-        return ResponseEntity.ok(userMapper.response(userService.createUser(newUser)));
+        var newUser = dataBaseUserServiceImpl.updateUser(userMapper.requestToUser(id, request));
+        return ResponseEntity.ok(userMapper.response(dataBaseUserServiceImpl.createUser(newUser)));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
-        userService.deleteUserById(id);
+        dataBaseUserServiceImpl.deleteUserById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @PostMapping("save-with-news")
@@ -62,7 +66,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userMapper
                         .response(
-                                userService
+                                dataBaseUserServiceImpl
                                         .createUserWithNews(requireUser,
                                                 newsList)
                         ));

@@ -1,14 +1,13 @@
 package project.newtrying.service.impl;
 
-import jdk.jshell.spi.ExecutionControl;
+import jakarta.persistence.Cacheable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
-import project.newtrying.exception.NotFoundException;
 import project.newtrying.models.entitites.News;
 import project.newtrying.models.filter.NewsFilter;
 import project.newtrying.repository.NewsRepository;
 import project.newtrying.service.NewsService;
+import org.apache.commons.lang3.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +19,10 @@ public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
 
 
+
     @Override
     public List<News> newsByFilter(NewsFilter newsFilter) {
-        return new ArrayList<>();
+        return (List<News>) new NotImplementedException();
     }
 
     @Override
@@ -40,9 +40,6 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public News createNews(News news) {
         return newsRepository.createNews(news);
-
-//        Long newsId = news.getId();
-//        Long userId = news.getUser().getId();
 
     }
 

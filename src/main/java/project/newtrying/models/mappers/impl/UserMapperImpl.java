@@ -31,7 +31,7 @@ public class UserMapperImpl implements UserMapper {
         UserResponse response = new UserResponse();
         response.setId(user.getId());
         response.setUserName(user.getUserName());
-        response.setNews(newsMapper.responseList(user.getNewsList()));
+        response.setNews(newsMapper.responseToList(user.getNewsList()));
         return response;
     }
 

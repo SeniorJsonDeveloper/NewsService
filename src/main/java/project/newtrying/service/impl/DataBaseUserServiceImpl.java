@@ -11,21 +11,22 @@ import project.newtrying.repository.DataBaseUserRepository;
 import project.newtrying.service.UserService;
 import project.newtrying.utils.BeanUtils;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class DataBaseUserServiceImpl implements UserService {
-    private final DataBaseUserRepository repository;
-    private final DataBaseNewsRepository newsRepository;
+    private final DataBaseUserRepository dataBaseUserRepository;
+    private final DataBaseNewsRepository dataBaseNewsRepository;
 
     @Override
     @Transactional
     public User createUserWithNews(User user, List<News> newsList) {
-        User existedUser = repository.save(user);
+        User existedUser = dataBaseUserRepository.save(user);
         for (News news:newsList){
             news.setUser(existedUser);
-            var savedNews = newsRepository.save(news);
+            var savedNews = dataBaseNewsRepository.save(news);
             existedUser.addNews(savedNews);
         }
         return existedUser;
@@ -33,29 +34,39 @@ public class DataBaseUserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return repository.findAll();
+        return dataBaseUserRepository.findAll();
     }
 
     @Override
     public User findById(Long id) {
-        return repository.findById(id)
+        return dataBaseUserRepository.findById(id)
+                .orElseThrow(()->new NotFoundException(
+                        MessageFormat.format("Пользователь с указанным {} не найден",id)
+                ));
+    }
+
+    @Override
+    public User findByName(String name) {
+        return dataBaseUserRepository.findByName(name)
                 .orElseThrow(()->new NotFoundException(""));
     }
 
     @Override
     public User createUser(User user) {
-        return repository.save(user);
+        return dataBaseUserRepository.save(user);
     }
 
     @Override
+    @Transactional
     public User updateUser(User user) {
         User existedUser = findById(user.getId());
         BeanUtils.copyNonNullProperties(user,existedUser);
-        return repository.save(existedUser);
+        return dataBaseUserRepository.save(existedUser);
     }
 
     @Override
+    @Transactional
     public void deleteUserById(Long id) {
-        repository.deleteById(id);
+        dataBaseUserRepository.deleteById(id);
     }
 }

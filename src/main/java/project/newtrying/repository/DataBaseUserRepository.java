@@ -3,15 +3,14 @@ package project.newtrying.repository;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import project.newtrying.models.entitites.User;
 
 import java.util.List;
+import java.util.Optional;
 
-@Repository
 public interface DataBaseUserRepository extends JpaRepository<User,Long> {
-    @Override
-    @EntityGraph("news")
-    @NonNull
-    List<User> findAll();
+    @Query(value = "select*from Project_2.user where user_name = ?",nativeQuery = true)
+    Optional<User> findByName(String userName);
 }

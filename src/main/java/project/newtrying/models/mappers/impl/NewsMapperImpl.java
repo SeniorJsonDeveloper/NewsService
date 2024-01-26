@@ -1,6 +1,7 @@
 package project.newtrying.models.mappers.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import project.newtrying.models.entitites.News;
 import project.newtrying.models.dto.UpsertNewsRequest;
@@ -15,7 +16,8 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class NewsMapperImpl implements NewsMapper {
-    private final UserService userService;
+
+    private final UserService dataBaseUserServiceImpl;
 
     public News requestToNews(UpsertNewsRequest request) {
         News news1 = new News();
@@ -23,7 +25,7 @@ public class NewsMapperImpl implements NewsMapper {
         news1.setAuthor(request.getAuthor());
         news1.setCategory(request.getCategory());
         news1.setComments(request.getComments());
-        news1.setUser(userService.findById(request.getUserId()));
+        news1.setUser(dataBaseUserServiceImpl.findById(request.getUserId()));
         return news1;
     }
 
@@ -41,6 +43,11 @@ public class NewsMapperImpl implements NewsMapper {
         response.setCategory(news.getCategory());
         response.setComments(news.getComments());
         return response;
+    }
+
+    @Override
+    public NewsListResponse responseList(List<News> news) {
+        return null;
     }
 
     public List<NewsResponse> responseToList(List<News> news) {

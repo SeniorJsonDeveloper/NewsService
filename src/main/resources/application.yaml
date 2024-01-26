@@ -9,5 +9,23 @@ spring:
       ddl-auto: update
   main:
     allow-circular-references: true
+  cache:
+    type: redis
+    cache-names:
+      -userCache
+      -newsCache
+
 server:
   port: 2228
+app:
+  cache:
+    cacheType: redis
+    cacheNames:
+      -userCache
+      -newsCache
+    cacheMap:
+      -userCache
+      -newsCache
+
+
+

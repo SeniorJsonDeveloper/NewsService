@@ -13,6 +13,6 @@ import java.util.List;
 
 
 public interface DataBaseNewsRepository extends JpaRepository<News,Long>, JpaSpecificationExecutor<News> {
-    Page <News> findAllByCategory(String category, Pageable pageable);
+    Page<News>findAllByCategory(String category, Pageable pageable);
 
 }
