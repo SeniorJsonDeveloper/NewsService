@@ -9,6 +9,7 @@ public interface UserService {
     User createUserWithNews(User user, List<News> news);
     List<User> findAll();
     User findById(Long id);
+    User findByName(String name);
     User createUser(User user);
     User updateUser(User user);
     void deleteUserById(Long id);
