@@ -5,8 +5,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import project.newtrying.models.entitites.User;
 import project.newtrying.models.dto.UpsertUserRequest;
-import project.newtrying.models.responses.UserListResponse;
-import project.newtrying.models.responses.UserResponse;
+import project.newtrying.models.dto.responses.UserListResponse;
+import project.newtrying.models.dto.responses.UserResponse;
 
 import java.util.List;
 

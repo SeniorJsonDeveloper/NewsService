@@ -1,4 +1,4 @@
-package project.newtrying.models.responses;
+package project.newtrying.models.dto.responses;
 
 import lombok.Data;
 

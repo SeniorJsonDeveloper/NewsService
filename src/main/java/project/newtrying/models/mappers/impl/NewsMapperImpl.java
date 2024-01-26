@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import project.newtrying.models.entitites.News;
 import project.newtrying.models.dto.UpsertNewsRequest;
-import project.newtrying.models.responses.NewsListResponse;
-import project.newtrying.models.responses.NewsResponse;
+import project.newtrying.models.dto.responses.NewsListResponse;
+import project.newtrying.models.dto.responses.NewsResponse;
+import project.newtrying.models.mappers.NewsMapper;
 import project.newtrying.service.UserService;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class NewsMapperImpl {
+public class NewsMapperImpl implements NewsMapper {
     private final UserService userService;
 
     public News requestToNews(UpsertNewsRequest request) {
@@ -42,13 +43,13 @@ public class NewsMapperImpl {
         return response;
     }
 
-    public List<NewsResponse> responseList(List<News> news) {
+    public List<NewsResponse> responseToList(List<News> news) {
         return news.stream()
                 .map(this::response)
                 .collect(Collectors.toList());
     }
 
-    public NewsListResponse listResponse(List<News> newsList) {
+    public NewsListResponse listToResponse(List<News> newsList) {
         NewsListResponse newsListResponse = new NewsListResponse();
         newsListResponse.setNewsResponseList(newsList
                 .stream()

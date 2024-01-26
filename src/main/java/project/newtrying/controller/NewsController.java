@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import project.newtrying.models.dto.UpsertNewsRequest;
 import project.newtrying.models.filter.NewsFilter;
 import project.newtrying.models.mappers.impl.NewsMapperImpl;
-import project.newtrying.models.responses.NewsListResponse;
-import project.newtrying.models.responses.NewsResponse;
+import project.newtrying.models.dto.responses.NewsListResponse;
+import project.newtrying.models.dto.responses.NewsResponse;
 import project.newtrying.service.NewsService;
 
 @RestController
@@ -20,13 +20,13 @@ public class NewsController {
     public ResponseEntity<NewsListResponse> getWithFilter(@RequestParam String category){
         NewsFilter newsFilter = new NewsFilter();
         newsFilter.setCategory(category);
-        return ResponseEntity.ok(newsMapper.listResponse(newsService.newsByFilter(
+        return ResponseEntity.ok(newsMapper.listToResponse(newsService.newsByFilter(
                 newsFilter
         )));
     }
     @GetMapping
     public ResponseEntity<NewsListResponse> getAllNews(){
-        return ResponseEntity.ok(newsMapper.listResponse(newsService.findAll()));
+        return ResponseEntity.ok(newsMapper.listToResponse(newsService.findAll()));
     }
     @GetMapping("{id}")
     public ResponseEntity<NewsResponse> getNewsById(@PathVariable Long id){
